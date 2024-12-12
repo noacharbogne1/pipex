@@ -6,7 +6,7 @@
 #    By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/11 08:15:54 by ncharbog          #+#    #+#              #
-#    Updated: 2024/12/12 15:36:52 by ncharbog         ###   ########.fr        #
+#    Updated: 2024/12/12 17:57:54 by ncharbog         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 
 NAME = pipex
 
-SRC = init.c \
-	parsing.c \
-	libft_modified.c \
+SRC = parsing.c \
 	free_and_errors.c
 
 OBJ_DIR = .objects
@@ -41,7 +39,7 @@ $(NAME): $(OBJ) $(OBJ_LIBFT) $(OBJ_PRINTF)
 
 $(OBJ_DIR)/%.o: %.c
 	mkdir -p $(@D)
-	$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(PRINTF_DIR) -O3 -c $< -o $@
+	$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(PRINTF_DIR) -O0 -c $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR) $(OBJ_LIBFT) $(OBJ_PRINTF)

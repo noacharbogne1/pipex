@@ -6,22 +6,16 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:24:08 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/12 17:03:31 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:46:39 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_free_lst(t_cmd **head)
+void	init_struct(t_data *data)
 {
-	while ((*head))
-	{
-		free((*head)->cmd);
-		if ((*head)->param)
-			ft_free_tab((*head)->param);
-		(*head) = (*head)->next;
-	}
-	free((*head));
+	data->cmd = NULL;
+	data->args = NULL;
 }
 
 void	ft_free_tab(char **tab)
@@ -40,14 +34,10 @@ void	ft_free_error(t_data *data, char *msg)
 {
 	if (data)
 	{
-		if (data->file1)
-			free(data->file1);
-		if (data->file2)
-			free(data->file2);
-		if (data->path)
-			ft_free_tab(data->path);
 		if (data->cmd)
-			ft_free_lst(&data->cmd);
+			ft_free_tab(data->cmd);
+		if (data->args)
+			ft_free_tab(data->args);
 	}
 	if (msg)
 	{
