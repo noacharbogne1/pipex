@@ -6,36 +6,19 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:24:27 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/12 17:53:30 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/13 08:55:30 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	**add_slash(char **path)
-{
-	int	i;
-
-	i = 0;
-	while (path[i])
-	{
-		path[i] = ft_strjoin(path[i], "/");
-		i++;
-	}
-	return (path);
-}
-
 char	**get_path(t_data *data, char **env)
 {
 	char	*str;
-	char	**tmp;
 	char	**path;
 	int		i;
 
 	i = 0;
-	str = malloc(280 * sizeof(char));
-	if (!str)
-		ft_free_error(data, INIT);
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
@@ -45,13 +28,24 @@ char	**get_path(t_data *data, char **env)
 	if (env[i] == NULL)
 		ft_free_error(data, PATH);
 	str = ft_strtrim(env[i], "PATH=");
-	tmp = ft_split(str, ':');
-	path = add_slash(tmp);
-	ft_free_tab(tmp);
+	path = ft_split(str, ':');
 	free(str);
+	str = NULL;
 	if (!path)
 		ft_free_error(data, INIT);
 	return (path);
+}
+
+char	*get_pathname(char *cmd, char *path)
+{
+	char	*buf;
+	char	*pathname;
+
+	buf = ft_strjoin(path, "/");
+	pathname = ft_strjoin(buf, cmd);
+	free(buf);
+	buf = NULL;
+	return (pathname);
 }
 
 char	*get_cmd(t_data *data, char **env, char *cmd)
@@ -66,7 +60,7 @@ char	*get_cmd(t_data *data, char **env, char *cmd)
 	path = get_path(data, env);
 	while (path[i])
 	{
-		filename = ft_strjoin(path[i], cmd);
+		filename = get_pathname(cmd, path[i]);
 		a = access(filename, X_OK);
 		if (a == 0)
 			break;
@@ -77,6 +71,7 @@ char	*get_cmd(t_data *data, char **env, char *cmd)
 	if (a != 0)
 		return (0);
 	ft_free_tab(path);
+	path = NULL;
 	return (filename);
 }
 
@@ -98,14 +93,7 @@ void	ft_parse_cmds(t_data *data, char **argv, char **env, int argc)
 		n_cmd++;
 		i++;
 	}
-}
-
-void	ft_check_files(char **argv, int argc)
-{
-	if (access(argv[1], R_OK) == -1 || access(argv[1], W_OK) == -1)
-		ft_free_error(NULL, FILE);
-	if (access(argv[argc - 1], R_OK) == -1 || access(argv[argc - 1], W_OK) == -1)
-		ft_free_error(NULL, FILE);
+	data->cmd[i] = 0;
 }
 
 int	main(int argc, char **argv, char **env)
@@ -115,9 +103,15 @@ int	main(int argc, char **argv, char **env)
 	init_struct(&data);
 	if (argc == 5)
 	{
-		ft_check_files(argv, argc);
+		ft_init(&data, argv, argc);
 		ft_parse_cmds(&data, argv, env, argc);
 		//ft_parse_args;
+		int i = 0;
+		while (data.cmd[i])
+		{
+			ft_printf("%s\n", data.cmd[i]);
+			i++;
+		}
 		ft_free_error(&data, NULL);
 		return (1);
 	}
