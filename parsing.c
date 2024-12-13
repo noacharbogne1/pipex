@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:24:27 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/13 11:19:52 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:26:30 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,54 +38,31 @@ char	**get_path(t_data *data, char **env)
 
 char	*skip_spaces(char *cmd)
 {
-	char	*dest;
 	int		start;
 	int		end;
-	int		i;
 
-	i = 0;
 	start = 0;
-	end = 0;
-	while (cmd[i] && cmd[i] == ' ')
-		i++;
-	if (cmd[i] && cmd[i] != ' ')
-	{
-		start = i;
-		while (cmd[i] && cmd[i] != ' ')
-			i++;
-	}
-	if (cmd[i] && cmd[i] == ' ')
-		end = i;
-	if (end == 0 && start == 0)
-		end = ft_strlen(cmd) - 1;
-	dest = malloc((end - start + 1) * sizeof(char));
-	if (!dest)
-		return (NULL);
-	i = 0;
-	while(dest[i] && i < (end - start))
-	{
-		dest[i] = cmd[start];
-		i++;
+	while (cmd[start] && cmd[start] == ' ')
 		start++;
-	}
-	dest[i] = '\0';
-	free(cmd);
-	return(dest);
+	end = start;
+	while (cmd[end] && cmd[end] != ' ')
+		end++;
+	return(ft_substr(cmd, start, (end - start)));
 }
 
 char	*get_pathname(char *cmd, char *path)
 {
 	char	*buf;
 	char	*pathname;
-	//char	*only_cmd;
+	char	*only_cmd;
 
-	//only_cmd = skip_spaces(cmd);
+	only_cmd = skip_spaces(cmd);
 	buf = ft_strjoin(path, "/");
 	pathname = ft_strjoin(buf, cmd);
 	free(buf);
 	buf = NULL;
-	//free(only_cmd);
-	//only_cmd = NULL;
+	free(only_cmd);
+	only_cmd = NULL;
 	return (pathname);
 }
 

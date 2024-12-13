@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:25:57 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/13 10:02:10 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:26:57 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_parse_cmds(t_data *data, char **argv, char **env, int argc);
 char	*get_cmd(t_data *data, char **env, char *cmd);
 char	**get_path(t_data *data, char **env);
 char	*get_pathname(char *cmd, char *path);
+char	*skip_spaces(char *cmd);
 
 // free_and_errors.c
 void	ft_free_error(t_data *data, char *msg);
