@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   macros.h                                           :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 14:53:18 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/13 15:35:27 by ncharbog         ###   ########.fr       */
+/*   Created: 2024/12/13 15:03:04 by ncharbog          #+#    #+#             */
+/*   Updated: 2024/12/13 15:38:28 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MACROS_H
-# define MACROS_H
+#include "pipex.h"
 
-// errors
-# define PATH "path not found"
-# define ARGS "arguments not valid"
-# define EXEC "the execution failed"
-# define ARGC "expected 4 arguments"
-# define INIT "the initialization failed"
-# define FILE "files doesn't exist or doesn't have the right permissions"
-# define CMD "commands doesn't exist"
-
-#endif
+void	ft_exec(t_data *data, t_cmd *current, char **env)
+{
+	if (execve(current->cmd, current->args, env) == -1)
+		ft_free_error(data, EXEC);
+}

@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:24:27 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/13 11:26:30 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/13 15:38:37 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*get_pathname(char *cmd, char *path)
 
 	only_cmd = skip_spaces(cmd);
 	buf = ft_strjoin(path, "/");
-	pathname = ft_strjoin(buf, cmd);
+	pathname = ft_strjoin(buf, only_cmd);
 	free(buf);
 	buf = NULL;
 	free(only_cmd);
@@ -125,13 +125,25 @@ int	main(int argc, char **argv, char **env)
 	{
 		ft_init(&data, argv, argc);
 		ft_parse_cmds(&data, argv, env, argc);
-		//ft_parse_args;
+		ft_parse_args(&data, argv, argc);
 		current = data.cmd;
 		while (current)
 		{
-			ft_printf("%s\n", current->cmd);
+			ft_exec(&data, current, env);
 			current = current->next;
 		}
+		// current = data.cmd;
+		// int i = 0;
+		// while (current)
+		// {
+		// 	i = 0;
+		// 	while (current->args[i])
+		// 	{
+		// 		ft_printf("%s\n", current->args[i]);
+		// 		i++;
+		// 	}
+		// 	current = current->next;
+		// }
 		ft_free_error(&data, NULL);
 		return (1);
 	}
