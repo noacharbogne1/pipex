@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:24:27 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/13 08:55:30 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:19:52 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,56 @@ char	**get_path(t_data *data, char **env)
 	return (path);
 }
 
+char	*skip_spaces(char *cmd)
+{
+	char	*dest;
+	int		start;
+	int		end;
+	int		i;
+
+	i = 0;
+	start = 0;
+	end = 0;
+	while (cmd[i] && cmd[i] == ' ')
+		i++;
+	if (cmd[i] && cmd[i] != ' ')
+	{
+		start = i;
+		while (cmd[i] && cmd[i] != ' ')
+			i++;
+	}
+	if (cmd[i] && cmd[i] == ' ')
+		end = i;
+	if (end == 0 && start == 0)
+		end = ft_strlen(cmd) - 1;
+	dest = malloc((end - start + 1) * sizeof(char));
+	if (!dest)
+		return (NULL);
+	i = 0;
+	while(dest[i] && i < (end - start))
+	{
+		dest[i] = cmd[start];
+		i++;
+		start++;
+	}
+	dest[i] = '\0';
+	free(cmd);
+	return(dest);
+}
+
 char	*get_pathname(char *cmd, char *path)
 {
 	char	*buf;
 	char	*pathname;
+	//char	*only_cmd;
 
+	//only_cmd = skip_spaces(cmd);
 	buf = ft_strjoin(path, "/");
 	pathname = ft_strjoin(buf, cmd);
 	free(buf);
 	buf = NULL;
+	//free(only_cmd);
+	//only_cmd = NULL;
 	return (pathname);
 }
 
@@ -77,40 +118,42 @@ char	*get_cmd(t_data *data, char **env, char *cmd)
 
 void	ft_parse_cmds(t_data *data, char **argv, char **env, int argc)
 {
-	int	i;
-	int	n_cmd;
+	t_cmd	*tmp;
+	char	*dup;
+	int		n_cmd;
 
-	i = 0;
 	n_cmd = 2;
 	while (n_cmd < argc - 1)
 	{
 		if (access(argv[n_cmd], X_OK) == -1)
-			data->cmd[i] = get_cmd(data, env, argv[n_cmd]);
+			dup = get_cmd(data, env, argv[n_cmd]);
 		else
-			data->cmd[i] = ft_strdup(argv[n_cmd]);
-		if (!data->cmd[i])
+			dup = ft_strdup(argv[n_cmd]);
+		tmp = ft_lstnew2(dup);
+		if (!tmp)
 			ft_free_error(data, CMD);
+		ft_lstadd_back2(&(data->cmd), tmp);
 		n_cmd++;
-		i++;
 	}
-	data->cmd[i] = 0;
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	t_data	data;
+	t_cmd *current;
 
 	init_struct(&data);
+	current = NULL;
 	if (argc == 5)
 	{
 		ft_init(&data, argv, argc);
 		ft_parse_cmds(&data, argv, env, argc);
 		//ft_parse_args;
-		int i = 0;
-		while (data.cmd[i])
+		current = data.cmd;
+		while (current)
 		{
-			ft_printf("%s\n", data.cmd[i]);
-			i++;
+			ft_printf("%s\n", current->cmd);
+			current = current->next;
 		}
 		ft_free_error(&data, NULL);
 		return (1);

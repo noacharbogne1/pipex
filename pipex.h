@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:25:57 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/13 08:48:08 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/13 10:02:10 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,16 @@
 # include "macros.h"
 # include "ft_printf/ft_printf.h"
 
+typedef struct s_cmd
+{
+	char			*cmd;
+	char			**args;
+	struct s_cmd	*next;
+}	t_cmd;
+
 typedef struct s_data
 {
-	char	**cmd;
-	char	**args;
+	t_cmd	*cmd;
 }	t_data;
 
 // parsing.c
@@ -34,5 +40,10 @@ void	ft_free_error(t_data *data, char *msg);
 void	ft_free_tab(char **tab);
 void	init_struct(t_data *data);
 void	ft_init(t_data *data, char **argv, int argc);
+void	ft_free_lst(t_cmd **head);
+
+void	ft_lstadd_back2(t_cmd **lst, t_cmd *new);
+t_cmd	*ft_lstnew2(void *content);
+void	ft_lstdelone2(t_cmd *lst);
 
 #endif
