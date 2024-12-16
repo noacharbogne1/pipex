@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:25:57 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/13 15:38:40 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:49:21 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include "libft/libft.h"
 # include "macros.h"
 # include "ft_printf/ft_printf.h"
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <fcntl.h>
 
 typedef struct s_cmd
 {
@@ -50,6 +53,6 @@ void	ft_free_lst(t_cmd **head);
 void	ft_lstadd_back2(t_cmd **lst, t_cmd *new);
 t_cmd	*ft_lstnew2(void *content);
 
-void	ft_exec(t_data *data, t_cmd *current, char **env);
+void	ft_exec(t_data *data, t_cmd *current, char **argv, char **env);
 
 #endif

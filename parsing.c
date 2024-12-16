@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:24:27 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/13 16:08:39 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:49:27 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,21 +129,9 @@ int	main(int argc, char **argv, char **env)
 		current = data.cmd;
 		while (current)
 		{
-			ft_exec(&data, current, env);
+			ft_exec(&data, current, argv, env);
 			current = current->next;
 		}
-		// current = data.cmd;
-		// int i = 0;
-		// while (current)
-		// {
-		// 	i = 0;
-		// 	while (current->args[i])
-		// 	{
-		// 		ft_printf("%s\n", current->args[i]);
-		// 		i++;
-		// 	}
-		// 	current = current->next;
-		// }
 		ft_free_error(&data, NULL);
 		return (1);
 	}
