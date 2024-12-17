@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:24:08 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/17 09:40:46 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/17 10:57:48 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,21 @@ void	ft_free_tab_char(char **tab)
 	int	i;
 	i = 0;
 	while (tab[i])
-		i++;
-	while (i--)
-		free(tab[i]);
+		free(tab[i++]);
 	free(tab);
 	tab = NULL;
 }
 
-void	ft_free_tab_int(int **tab)
+void	ft_free_tab_int(int **tab, int cmd)
 {
 	int	i;
+
 	i = 0;
-	while (tab[i])
-		i++;
-	while (i--)
+	while (i < cmd - 1)
+	{
 		free(tab[i]);
+		i++;
+	}
 	free(tab);
 	tab = NULL;
 }
@@ -62,7 +62,7 @@ void	ft_free_error(t_data *data, char *msg)
 		if (data->cmd)
 			ft_free_lst(&data->cmd);
 		if (data->fd)
-			ft_free_tab_int(data->fd);
+			ft_free_tab_int(data->fd, data->cmd_count);
 	}
 	if (msg)
 	{

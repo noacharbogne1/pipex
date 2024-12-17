@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:24:27 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/17 09:41:04 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/17 10:55:01 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,27 +112,21 @@ void	ft_parse_cmds(t_data *data, char **argv, char **env, int argc)
 		free(only_cmd);
 		n_cmd++;
 	}
+	data->cmd_count = argc - 3;
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	t_data	data;
-	t_cmd *current;
 
 	init_struct(&data);
-	current = NULL;
-	if (argc == 5)
+	if (argc >= 5)
 	{
 		ft_init(&data, argv, argc);
 		ft_parse_cmds(&data, argv, env, argc);
 		ft_parse_args(&data, argv, argc);
-		current = data.cmd;
 		pipes(&data, argc);
-		// while (current)
-		// {
-		// 	ft_exec(&data, current, argv, env);
-		// 	current = current->next;
-		// }
+		ft_exec(&data, argc, argv, env);
 		ft_free_error(&data, NULL);
 		return (1);
 	}

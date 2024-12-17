@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 09:34:15 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/17 09:34:45 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/17 10:52:23 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	ft_init(t_data *data, char **argv, int argc)
 
 void	init_struct(t_data *data)
 {
+	data->pipe_count = 0;
+	data->cmd_count = 0;
 	data->fd = NULL;
 	data->cmd = NULL;
 }
