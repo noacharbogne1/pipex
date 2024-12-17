@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:51:33 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/17 10:11:59 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:25:57 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,14 @@ void	pipes(t_data *data, int argc)
 		i++;
 	}
 	data->pipe_count = i;
+}
+
+void	files(t_data *data, char **argv, int argc)
+{
+	data->infile = open(argv[1], O_RDONLY);
+	if (data->infile == -1)
+		ft_free_error(data, FILE);
+	data->outfile = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (data->outfile == -1)
+		ft_free_error(data, FILE);
 }

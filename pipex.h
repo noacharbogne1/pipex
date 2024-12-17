@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:25:57 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/17 10:55:21 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:49:06 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_data
 {
 	int		pipe_count;
 	int		cmd_count;
+	int		infile;
+	int		outfile;
 	int		**fd;
 	t_cmd	*cmd;
 }	t_data;
@@ -45,6 +47,7 @@ char	*skip_spaces(char *cmd);
 // parsing2.c
 void	ft_parse_args(t_data *data, char **argv, int argc);
 void	pipes(t_data *data, int argc);
+void	files(t_data *data, char **argv, int argc);
 
 // free_and_errors.c
 void	ft_free_error(t_data *data, char *msg);
@@ -54,13 +57,15 @@ void	ft_free_lst(t_cmd **head);
 
 // init.c
 void	init_struct(t_data *data);
-void	ft_init(t_data *data, char **argv, int argc);
+void	ft_init(t_data *data, char **argv);
 
 // libft_modified.c
 void	ft_lstadd_back2(t_cmd **lst, t_cmd *new);
 t_cmd	*ft_lstnew2(void *content);
 
 // exec.c
-void	ft_exec(t_data *data, int argc, char **argv, char **env);
+void	ft_exec(t_data *data, char **env);
+void	parent(t_data *data, pid_t p, int i);
+void	child(t_data *data, t_cmd *current, char **env, int i);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:24:27 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/17 10:55:01 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:27:28 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,12 @@ int	main(int argc, char **argv, char **env)
 	init_struct(&data);
 	if (argc >= 5)
 	{
-		ft_init(&data, argv, argc);
+		ft_init(&data, argv);
 		ft_parse_cmds(&data, argv, env, argc);
 		ft_parse_args(&data, argv, argc);
 		pipes(&data, argc);
-		ft_exec(&data, argc, argv, env);
+		files(&data, argv, argc);
+		ft_exec(&data, env);
 		ft_free_error(&data, NULL);
 		return (1);
 	}

@@ -6,59 +6,57 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:03:04 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/17 11:26:43 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:48:00 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_exec(t_data *data, int argc, char **argv, char **env)
+void	parent(t_data *data, pid_t p, int i)
+{
+	if (i > 0)
+		close(data->fd[i - 1][0]);
+	if (i < data->pipe_count)
+		close(data->fd[i][1]);
+	waitpid(p, NULL, 0);
+}
+
+void	child(t_data *data, t_cmd *current, char **env, int i)
+{
+	if (i > 0)
+		dup2(data->fd[i - 1][0], STDIN_FILENO);
+	if (i < data->pipe_count)
+		dup2(data->fd[i][1], STDOUT_FILENO);
+	if (i == 0)
+		dup2(data->infile, STDIN_FILENO);
+	if (i == data->pipe_count)
+		dup2(data->outfile, STDOUT_FILENO);
+	if (execve(current->cmd, current->args, env) == -1)
+		ft_free_error(data, EXEC);
+}
+
+void	ft_exec(t_data *data, char **env)
 {
 	t_cmd	*current;
 	int		i;
-	int		infile;
-	int		outfile;
 	__pid_t	p;
 
 	i = 0;
 	current = data->cmd;
-	infile = open(argv[1], O_RDONLY);
-	if (infile == -1)
-		ft_free_error(data, FILE);
-	outfile = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (outfile == -1)
-		ft_free_error(data, FILE);
 	while (current)
 	{
 		p = fork();
 		if (p < 0)
 			ft_free_error(data, FORK);
-		else if (p > 0) // parent
-		{
-			if (i > 0)
-				close(data->fd[i - 1][0]);
-			if (i < data->pipe_count)
-				close(data->fd[i][1]);
-			waitpid(p, NULL, 0);
-		}
-		else // child
-		{
-			if (i > 0)
-				dup2(data->fd[i - 1][0], STDIN_FILENO);
-			if (i < data->pipe_count)
-				dup2(data->fd[i][1], STDOUT_FILENO);
-			if (i == 0)
-				dup2(infile, STDIN_FILENO);
-			if (i == data->pipe_count)
-				dup2(outfile, STDOUT_FILENO);
-			if (execve(current->cmd, current->args, env) == -1)
-				ft_free_error(data, EXEC);
-		}
+		else if (p > 0)
+			parent(data, p, i);
+		else
+			child(data, current, env, i);
 		i++;
 		current = current->next;
 	}
-	close(infile);
-	close(outfile);
+	close(data->infile);
+	close(data->outfile);
 	i = 0;
 	while (i < data->pipe_count)
 	{
