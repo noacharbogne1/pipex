@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:03:04 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/17 10:27:47 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:26:43 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_exec(t_data *data, int argc, char **argv, char **env)
 		p = fork();
 		if (p < 0)
 			ft_free_error(data, FORK);
-		else if (p > 0) // parent : cmd2
+		else if (p > 0) // parent
 		{
 			if (i > 0)
 				close(data->fd[i - 1][0]);
@@ -41,7 +41,7 @@ void	ft_exec(t_data *data, int argc, char **argv, char **env)
 				close(data->fd[i][1]);
 			waitpid(p, NULL, 0);
 		}
-		else // child : cmd1
+		else // child
 		{
 			if (i > 0)
 				dup2(data->fd[i - 1][0], STDIN_FILENO);

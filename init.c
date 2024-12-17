@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 09:34:15 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/17 10:52:23 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:29:17 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	ft_init(t_data *data, char **argv, int argc)
 {
 	init_struct(data);
 	if (access(argv[1], R_OK) == -1 || access(argv[1], W_OK) == -1)
-		ft_free_error(NULL, FILE);
-	if (access(argv[argc - 1], R_OK) == -1 || access(argv[argc - 1], W_OK) == -1)
 		ft_free_error(NULL, FILE);
 }
 
