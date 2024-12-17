@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:24:27 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/16 16:49:27 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/17 09:41:04 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*get_cmd(t_data *data, char **env, char *cmd)
 	}
 	if (a != 0)
 		return (0);
-	ft_free_tab(path);
+	ft_free_tab_char(path);
 	path = NULL;
 	return (filename);
 }
@@ -127,11 +127,12 @@ int	main(int argc, char **argv, char **env)
 		ft_parse_cmds(&data, argv, env, argc);
 		ft_parse_args(&data, argv, argc);
 		current = data.cmd;
-		while (current)
-		{
-			ft_exec(&data, current, argv, env);
-			current = current->next;
-		}
+		pipes(&data, argc);
+		// while (current)
+		// {
+		// 	ft_exec(&data, current, argv, env);
+		// 	current = current->next;
+		// }
 		ft_free_error(&data, NULL);
 		return (1);
 	}
