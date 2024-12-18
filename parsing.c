@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:24:27 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/18 15:34:20 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:43:55 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ void	ft_parse_args(t_data *data, char **argv)
 	t_cmd	*tmp;
 	int		i;
 
-	i = 0;
+	i = 2;
 	tmp = data->cmd;
 	while (i < data->cmd_count)
 	{
-		tmp->args = ft_split(argv[tmp->pos], ' ');
+		tmp->args = ft_split(argv[i], ' ');
 		tmp = tmp->next;
 		i++;
 	}

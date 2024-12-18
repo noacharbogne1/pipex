@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 09:25:01 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/18 15:39:33 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:55:34 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ char	*get_cmd(t_data *data, char **env, char *cmd)
 	if (a != 0)
 	{
 		free(filename);
-		return (NULL);
+		filename = NULL;
+		return (ft_strdup(cmd));
 	}
 	return (filename);
 }
@@ -109,12 +110,8 @@ void	ft_parse_cmds(t_data *data, char **argv, char **env, int argc)
 			dup = ft_strdup(only_cmd);
 		if (!dup)
 			ft_printf("Error : command doesn't exist");
-		else
-		{
-			tmp = ft_lstnew2(dup);
-			ft_lstadd_back2(&(data->cmd), tmp);
-			tmp->pos = n_cmd;
-		}
+		tmp = ft_lstnew2(dup);
+		ft_lstadd_back2(&(data->cmd), tmp);
 		free(only_cmd);
 		n_cmd++;
 	}

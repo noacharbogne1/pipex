@@ -1,15 +1,1 @@
-total 88
--rw-r--r-- 1 ncharbog 2024_angouleme  1987 Dec 18 15:49 exec.c
--rw-r--r-- 1 ncharbog 2024_angouleme     7 Dec 13 15:42 file1
--rw-r--r-- 1 ncharbog 2024_angouleme     0 Dec 18 16:05 file2
--rw-r--r-- 1 ncharbog 2024_angouleme  1957 Dec 18 09:48 free_and_errors.c
-drwxr-xr-x 2 ncharbog 2024_angouleme  4096 Dec 18 12:49 ft_printf
--rw-r--r-- 1 ncharbog 2024_angouleme  1227 Dec 18 14:03 init.c
-drwxr-xr-x 2 ncharbog 2024_angouleme  4096 Dec 18 12:49 libft
--rw-r--r-- 1 ncharbog 2024_angouleme  1536 Dec 18 15:13 libft_modified.c
--rw-r--r-- 1 ncharbog 2024_angouleme  1295 Dec 18 14:23 macros.h
--rw-r--r-- 1 ncharbog 2024_angouleme  1752 Dec 18 09:26 Makefile
--rw-r--r-- 1 ncharbog 2024_angouleme  2683 Dec 18 15:39 parse_cmd.c
--rw-r--r-- 1 ncharbog 2024_angouleme  2144 Dec 18 15:34 parsing.c
--rwxr-xr-x 1 ncharbog 2024_angouleme 34008 Dec 18 15:49 pipex
--rw-r--r-- 1 ncharbog 2024_angouleme  2258 Dec 18 15:22 pipex.h
+      0       0       0

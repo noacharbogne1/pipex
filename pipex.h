@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:25:57 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/18 15:22:52 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:27:49 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 
 typedef struct s_cmd
 {
-	int				pos;
 	char			*cmd;
 	char			**args;
 	struct s_cmd	*next;
