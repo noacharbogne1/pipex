@@ -6,7 +6,7 @@
 #    By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/11 08:15:54 by ncharbog          #+#    #+#              #
-#    Updated: 2024/12/17 09:35:49 by ncharbog         ###   ########.fr        #
+#    Updated: 2024/12/18 09:26:15 by ncharbog         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 NAME = pipex
 
 SRC = parsing.c \
-	parsing2.c \
+	parse_cmd.c \
 	free_and_errors.c \
 	init.c \
 	exec.c \

@@ -6,19 +6,18 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:03:04 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/17 17:48:00 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/18 09:09:50 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	parent(t_data *data, pid_t p, int i)
+void	parent(t_data *data, int i)
 {
 	if (i > 0)
 		close(data->fd[i - 1][0]);
 	if (i < data->pipe_count)
 		close(data->fd[i][1]);
-	waitpid(p, NULL, 0);
 }
 
 void	child(t_data *data, t_cmd *current, char **env, int i)
@@ -31,6 +30,7 @@ void	child(t_data *data, t_cmd *current, char **env, int i)
 		dup2(data->infile, STDIN_FILENO);
 	if (i == data->pipe_count)
 		dup2(data->outfile, STDOUT_FILENO);
+	close_files(data);
 	if (execve(current->cmd, current->args, env) == -1)
 		ft_free_error(data, EXEC);
 }
@@ -38,8 +38,8 @@ void	child(t_data *data, t_cmd *current, char **env, int i)
 void	ft_exec(t_data *data, char **env)
 {
 	t_cmd	*current;
-	int		i;
 	__pid_t	p;
+	int		i;
 
 	i = 0;
 	current = data->cmd;
@@ -49,19 +49,13 @@ void	ft_exec(t_data *data, char **env)
 		if (p < 0)
 			ft_free_error(data, FORK);
 		else if (p > 0)
-			parent(data, p, i);
+			parent(data, i);
 		else
 			child(data, current, env, i);
 		i++;
 		current = current->next;
 	}
-	close(data->infile);
-	close(data->outfile);
-	i = 0;
-	while (i < data->pipe_count)
-	{
-		close(data->fd[i][0]);
-		close(data->fd[i][1]);
-		i++;
-	}
+	while (wait(NULL) > 0)
+		;
+	close_files(data);
 }

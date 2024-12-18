@@ -6,11 +6,26 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:24:08 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/17 17:39:58 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/18 09:05:19 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	close_files(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	close(data->infile);
+	close(data->outfile);
+	while (i < data->pipe_count)
+	{
+		close(data->fd[i][0]);
+		close(data->fd[i][1]);
+		i++;
+	}
+}
 
 void ft_free_lst(t_cmd **head)
 {
@@ -57,8 +72,12 @@ void	ft_free_tab_int(int **tab, int cmd)
 
 void	ft_free_error(t_data *data, char *msg)
 {
+	int	i;
+
+	i = 0;
 	if (data)
 	{
+		close_files(data);
 		if (data->cmd)
 			ft_free_lst(&data->cmd);
 		if (data->fd)
