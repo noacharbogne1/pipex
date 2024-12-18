@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 09:25:01 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/18 11:32:45 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/18 15:39:33 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,27 +82,13 @@ char	*get_cmd(t_data *data, char **env, char *cmd)
 		filename = NULL;
 		i++;
 	}
-	if (a != 0)
-		return (0);
 	ft_free_tab_char(path);
-	path = NULL;
-	return (filename);
-}
-
-void	sub_cmd(t_data *data, char *sub_argv, char **env)
-{
-	char	**sub_cmds;
-	char	*only_cmd;
-	int		i;
-
-	i = 2;
-	sub_cmds = ft_split(sub_argv, ' ');
-	while (sub_argv[i])
+	if (a != 0)
 	{
-		only_cmd = skip_spaces(sub_cmds[i]);
-		
-		i++;
+		free(filename);
+		return (NULL);
 	}
+	return (filename);
 }
 
 void	ft_parse_cmds(t_data *data, char **argv, char **env, int argc)
@@ -117,18 +103,20 @@ void	ft_parse_cmds(t_data *data, char **argv, char **env, int argc)
 	while (n_cmd < argc - 1)
 	{
 		only_cmd = skip_spaces(argv[n_cmd]);
-		if (only_cmd == "./pipex")
-			sub_cmd(data, argv[n_cmd], env);
 		if (access(only_cmd, X_OK) == -1)
 			dup = get_cmd(data, env, only_cmd);
 		else
 			dup = ft_strdup(only_cmd);
-		tmp = ft_lstnew2(dup);
-		if (!tmp)
-			ft_free_error(data, CMD);
-		ft_lstadd_back2(&(data->cmd), tmp);
+		if (!dup)
+			ft_printf("Error : command doesn't exist");
+		else
+		{
+			tmp = ft_lstnew2(dup);
+			ft_lstadd_back2(&(data->cmd), tmp);
+			tmp->pos = n_cmd;
+		}
 		free(only_cmd);
 		n_cmd++;
 	}
-	data->cmd_count = argc - 3;
+	data->cmd_count = ft_lstsize2(data->cmd);
 }

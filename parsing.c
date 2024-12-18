@@ -6,36 +6,36 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:24:27 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/18 09:25:47 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/18 15:34:20 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_parse_args(t_data *data, char **argv, int argc)
+void	ft_parse_args(t_data *data, char **argv)
 {
 	t_cmd	*tmp;
 	int		i;
 
-	i = 2;
+	i = 0;
 	tmp = data->cmd;
-	while (i < argc - 1)
+	while (i < data->cmd_count)
 	{
-		tmp->args = ft_split(argv[i], ' ');
+		tmp->args = ft_split(argv[tmp->pos], ' ');
 		tmp = tmp->next;
 		i++;
 	}
 }
 
-void	pipes(t_data *data, int argc)
+void	pipes(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	data->fd = malloc((argc - 4) * sizeof (int *));
+	data->fd = malloc((data->cmd_count) * sizeof (int *));
 	if (!data->fd)
 		ft_free_error(data, PIPE);
-	while (i < argc - 4)
+	while (i < data->cmd_count - 1)
 	{
 		data->fd[i] = malloc(2 * sizeof(int));
 		if (!data->fd[i])
@@ -67,8 +67,9 @@ int	main(int argc, char **argv, char **env)
 	{
 		ft_init(&data, argv);
 		ft_parse_cmds(&data, argv, env, argc);
-		ft_parse_args(&data, argv, argc);
-		pipes(&data, argc);
+		ft_parse_args(&data, argv);
+		if (data.cmd_count > 1)
+			pipes(&data);
 		files(&data, argv, argc);
 		ft_exec(&data, env);
 		ft_free_error(&data, NULL);

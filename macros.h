@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 14:53:18 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/13 16:16:47 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/18 14:23:44 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@
 # define ARGC "expected 4 arguments"
 # define INIT "the initialization failed"
 # define FILE "files doesn't exist or doesn't have the right permissions"
-# define CMD "commands doesn't exist"
+# define CMD "command doesn't exist"
 
 #endif

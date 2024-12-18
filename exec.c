@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:03:04 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/18 10:02:09 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/18 15:49:04 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ void	ft_exec(t_data *data, char **env)
 
 	i = 0;
 	current = data->cmd;
+	if (data->pipe_count == 0)
+	{
+		dup2(data->outfile, STDOUT_FILENO);
+		if (execve(current->cmd, current->args, env) == -1)
+			ft_free_error(data, EXEC);
+		close_files(data);
+		return ;
+	}
 	while (current)
 	{
 		p = fork();

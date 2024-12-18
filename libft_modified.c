@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 09:01:24 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/13 10:16:17 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/18 15:13:56 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,23 @@ t_cmd	*ft_lstnew2(void *content)
 	new->args = NULL;
 	new->next = NULL;
 	return (new);
+}
+
+int	ft_lstsize2(t_cmd *lst)
+{
+	t_cmd	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = lst;
+	if (!lst)
+		return (0);
+	if (lst->next == NULL)
+		return (1);
+	while (tmp->next != NULL)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	return (i + 1);
 }

@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:25:57 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/18 09:26:49 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/18 15:22:52 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 typedef struct s_cmd
 {
+	int				pos;
 	char			*cmd;
 	char			**args;
 	struct s_cmd	*next;
@@ -45,8 +46,8 @@ char	*get_pathname(char *cmd, char *path);
 char	*skip_spaces(char *cmd);
 
 // parsing.c
-void	ft_parse_args(t_data *data, char **argv, int argc);
-void	pipes(t_data *data, int argc);
+void	ft_parse_args(t_data *data, char **argv);
+void	pipes(t_data *data);
 void	files(t_data *data, char **argv, int argc);
 
 // free_and_errors.c
@@ -63,6 +64,7 @@ void	ft_init(t_data *data, char **argv);
 // libft_modified.c
 void	ft_lstadd_back2(t_cmd **lst, t_cmd *new);
 t_cmd	*ft_lstnew2(void *content);
+int		ft_lstsize2(t_cmd *lst);
 
 // exec.c
 void	ft_exec(t_data *data, char **env);
