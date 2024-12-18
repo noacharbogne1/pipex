@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 09:25:01 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/18 09:25:37 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/18 11:32:45 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,22 @@ char	*get_cmd(t_data *data, char **env, char *cmd)
 	return (filename);
 }
 
+void	sub_cmd(t_data *data, char *sub_argv, char **env)
+{
+	char	**sub_cmds;
+	char	*only_cmd;
+	int		i;
+
+	i = 2;
+	sub_cmds = ft_split(sub_argv, ' ');
+	while (sub_argv[i])
+	{
+		only_cmd = skip_spaces(sub_cmds[i]);
+		
+		i++;
+	}
+}
+
 void	ft_parse_cmds(t_data *data, char **argv, char **env, int argc)
 {
 	t_cmd	*tmp;
@@ -101,6 +117,8 @@ void	ft_parse_cmds(t_data *data, char **argv, char **env, int argc)
 	while (n_cmd < argc - 1)
 	{
 		only_cmd = skip_spaces(argv[n_cmd]);
+		if (only_cmd == "./pipex")
+			sub_cmd(data, argv[n_cmd], env);
 		if (access(only_cmd, X_OK) == -1)
 			dup = get_cmd(data, env, only_cmd);
 		else

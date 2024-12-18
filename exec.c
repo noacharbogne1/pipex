@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:03:04 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/18 09:09:50 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/18 10:02:09 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_exec(t_data *data, char **env)
 		i++;
 		current = current->next;
 	}
-	while (wait(NULL) > 0)
+	while (wait(NULL) != -1)
 		;
 	close_files(data);
 }
