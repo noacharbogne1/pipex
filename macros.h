@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 14:53:18 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/19 08:40:06 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:47:41 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 // errors
 # define PATH "path not found"
 # define ARGS "arguments not valid"
-# define EXEC "the execution failed"
 # define PIPE "pipe failed"
 # define FORK "fork failed"
 # define ARGC "expected 4 arguments"

@@ -6,21 +6,19 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 09:25:01 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/19 08:57:38 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:19:16 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	**get_path(t_data *data, char **env)
+char	**get_path(t_data *data, char **env, char *cmd)
 {
 	char	*str;
 	char	**path;
 	int		i;
 
 	i = 0;
-	path = NULL;
-	str = NULL;
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
@@ -28,12 +26,18 @@ char	**get_path(t_data *data, char **env)
 		i++;
 	}
 	if (env[i] == NULL)
-		ft_free_all(data, PATH, 1);
+	{
+		free (cmd);
+		ft_free_all(data, PATH, 2);
+	}
 	str = ft_strtrim(env[i], "PATH=");
 	path = ft_split(str, ':');
 	free(str);
 	if (!path)
-		ft_free_all(data, PATH, 1);
+	{
+		free (cmd);
+		ft_free_all(data, PATH, 2);
+	}
 	return (path);
 }
 
@@ -71,7 +75,7 @@ char	*get_cmd(t_data *data, char **env, char *cmd)
 
 	i = 0;
 	a = -1;
-	path = get_path(data, env);
+	path = get_path(data, env, cmd);
 	filename = NULL;
 	while (path[i])
 	{

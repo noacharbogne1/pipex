@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:24:27 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/19 09:35:11 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:59:34 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ void	pipes(t_data *data)
 	i = 0;
 	data->fd = malloc((data->cmd_count) * sizeof (int *));
 	if (!data->fd)
-		ft_free_all(data, PIPE, 1);
+		ft_free_all(data, PIPE, 2);
 	while (i < data->cmd_count - 1)
 	{
 		data->fd[i] = malloc(2 * sizeof(int));
 		if (!data->fd[i])
-			ft_free_all(data, PIPE, 1);
+			ft_free_all(data, PIPE, 2);
 		if (pipe(data->fd[i]) == -1)
-			ft_free_all(data, PIPE, 1);
+			ft_free_all(data, PIPE, 2);
 		i++;
 	}
 	data->pipe_count = i;
@@ -74,6 +74,6 @@ int	main(int argc, char **argv, char **env)
 		ft_free_all(&data, NULL, 0);
 		return (1);
 	}
-	ft_free_all(NULL, ARGC, 1);
+	ft_free_all(NULL, ARGC, 0);
 	return (0);
 }

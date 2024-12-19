@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 08:59:19 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/19 10:55:00 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:28:33 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,28 @@ void	close_files(t_data *data)
 	int	i;
 
 	i = 0;
-	close(data->infile);
-	close(data->outfile);
+	if (data->infile != -1)
+	{
+		close(data->infile);
+		data->infile = -1;
+	}
+	if (data->outfile != -1)
+	{
+		close(data->outfile);
+		data->outfile = -1;
+	}
 	while (i < data->pipe_count)
 	{
-		close(data->fd[i][0]);
-		close(data->fd[i][1]);
+		if (data->fd[i][0] != -1)
+		{
+			close(data->fd[i][0]);
+			data->fd[i][0] = -1;
+		}
+		if (data->fd[i][1] != -1)
+		{
+			close(data->fd[i][1]);
+			data->fd[i][1] = -1;
+		}
 		i++;
 	}
 }
@@ -87,7 +103,7 @@ void	ft_free_all(t_data *data, char *msg, int flag)
 	}
 	if (msg && flag == 0)
 		ft_printf_fd(2, "Error : %s\n", msg);
-	if (flag == 1)
-		ft_error(msg);
+	if (flag > 0)
+		ft_error(flag, msg);
 	exit(EXIT_SUCCESS);
 }

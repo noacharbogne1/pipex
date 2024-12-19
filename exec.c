@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:03:04 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/19 08:58:07 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:11:42 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	child(t_data *data, t_cmd *current, char **env, int i)
 		dup2(data->outfile, STDOUT_FILENO);
 	close_files(data);
 	if (execve(current->cmd, current->args, env) == -1)
-		ft_free_all(data, NULL, 1);
+		ft_free_all(data, ft_strdup(current->cmd), 3);
 }
 
 void	ft_exec(t_data *data, char **env)
