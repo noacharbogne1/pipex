@@ -6,7 +6,7 @@
 #    By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/11 08:15:54 by ncharbog          #+#    #+#              #
-#    Updated: 2024/12/18 09:26:15 by ncharbog         ###   ########.fr        #
+#    Updated: 2024/12/19 09:22:13 by ncharbog         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ NAME = pipex
 
 SRC = parsing.c \
 	parse_cmd.c \
-	free_and_errors.c \
+	free.c \
+	error.c \
 	init.c \
 	exec.c \
 	libft_modified.c

@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:24:27 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/18 17:43:55 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/19 08:55:45 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_parse_args(t_data *data, char **argv)
 
 	i = 2;
 	tmp = data->cmd;
-	while (i < data->cmd_count)
+	while (i < data->cmd_count + 2)
 	{
 		tmp->args = ft_split(argv[i], ' ');
 		tmp = tmp->next;
@@ -34,14 +34,14 @@ void	pipes(t_data *data)
 	i = 0;
 	data->fd = malloc((data->cmd_count) * sizeof (int *));
 	if (!data->fd)
-		ft_free_error(data, PIPE);
+		ft_free_error(data, PIPE, 1);
 	while (i < data->cmd_count - 1)
 	{
 		data->fd[i] = malloc(2 * sizeof(int));
 		if (!data->fd[i])
-			ft_free_error(data, PIPE);
+			ft_free_all(data, PIPE, 1);
 		if (pipe(data->fd[i]) == -1)
-			ft_free_error(data, PIPE);
+			ft_free_all(data, PIPE, 1);
 		i++;
 	}
 	data->pipe_count = i;
@@ -51,12 +51,11 @@ void	files(t_data *data, char **argv, int argc)
 {
 	data->infile = open(argv[1], O_RDONLY);
 	if (data->infile == -1)
-		ft_free_error(data, FILE);
+		ft_free_all(data, FILE1, 1);
 	data->outfile = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (data->outfile == -1)
-		ft_free_error(data, FILE);
+		ft_free_all(data, FILE2, 1);
 }
-
 
 int	main(int argc, char **argv, char **env)
 {
@@ -72,9 +71,9 @@ int	main(int argc, char **argv, char **env)
 			pipes(&data);
 		files(&data, argv, argc);
 		ft_exec(&data, env);
-		ft_free_error(&data, NULL);
+		ft_free_error(&data, NULL, 0);
 		return (1);
 	}
-	ft_free_error(NULL, ARGC);
+	ft_free_error(NULL, ARGC, 1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:25:57 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/18 17:27:49 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/19 09:21:26 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 # include "libft/libft.h"
 # include "macros.h"
 # include "ft_printf/ft_printf.h"
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <string.h>
 
 typedef struct s_cmd
 {
@@ -49,12 +51,15 @@ void	ft_parse_args(t_data *data, char **argv);
 void	pipes(t_data *data);
 void	files(t_data *data, char **argv, int argc);
 
-// free_and_errors.c
-void	ft_free_error(t_data *data, char *msg);
+// free.c
+void	ft_free_all(t_data *data, char *msg, int flag);
 void	ft_free_tab_char(char **tab);
 void	ft_free_tab_int(int **tab, int cmd);
 void	ft_free_lst(t_cmd **head);
 void	close_files(t_data *data);
+
+// error.c
+void	ft_error(char *msg);
 
 // init.c
 void	init_struct(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 09:25:01 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/18 17:55:34 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/19 08:57:38 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,21 @@ char	**get_path(t_data *data, char **env)
 	int		i;
 
 	i = 0;
+	path = NULL;
+	str = NULL;
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-			break;
+			break ;
 		i++;
 	}
 	if (env[i] == NULL)
-		ft_free_error(data, PATH);
+		ft_free_all(data, PATH, 1);
 	str = ft_strtrim(env[i], "PATH=");
 	path = ft_split(str, ':');
 	free(str);
-	str = NULL;
 	if (!path)
-		ft_free_error(data, INIT);
+		ft_free_all(data, PATH, 1);
 	return (path);
 }
 
@@ -47,7 +48,7 @@ char	*skip_spaces(char *cmd)
 	end = start;
 	while (cmd[end] && cmd[end] != ' ')
 		end++;
-	return(ft_substr(cmd, start, (end - start)));
+	return (ft_substr(cmd, start, (end - start)));
 }
 
 char	*get_pathname(char *cmd, char *path)
@@ -58,7 +59,6 @@ char	*get_pathname(char *cmd, char *path)
 	buf = ft_strjoin(path, "/");
 	pathname = ft_strjoin(buf, cmd);
 	free(buf);
-	buf = NULL;
 	return (pathname);
 }
 
@@ -72,12 +72,13 @@ char	*get_cmd(t_data *data, char **env, char *cmd)
 	i = 0;
 	a = -1;
 	path = get_path(data, env);
+	filename = NULL;
 	while (path[i])
 	{
 		filename = get_pathname(cmd, path[i]);
 		a = access(filename, X_OK);
 		if (a == 0)
-			break;
+			break ;
 		free(filename);
 		filename = NULL;
 		i++;
@@ -86,7 +87,6 @@ char	*get_cmd(t_data *data, char **env, char *cmd)
 	if (a != 0)
 	{
 		free(filename);
-		filename = NULL;
 		return (ft_strdup(cmd));
 	}
 	return (filename);
@@ -100,6 +100,8 @@ void	ft_parse_cmds(t_data *data, char **argv, char **env, int argc)
 	int		n_cmd;
 
 	n_cmd = 2;
+	dup = NULL;
+	tmp = NULL;
 	only_cmd = NULL;
 	while (n_cmd < argc - 1)
 	{
@@ -108,8 +110,6 @@ void	ft_parse_cmds(t_data *data, char **argv, char **env, int argc)
 			dup = get_cmd(data, env, only_cmd);
 		else
 			dup = ft_strdup(only_cmd);
-		if (!dup)
-			ft_printf("Error : command doesn't exist");
 		tmp = ft_lstnew2(dup);
 		ft_lstadd_back2(&(data->cmd), tmp);
 		free(only_cmd);

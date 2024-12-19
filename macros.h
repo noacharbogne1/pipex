@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 14:53:18 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/18 14:23:44 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/19 08:40:06 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # define FORK "fork failed"
 # define ARGC "expected 4 arguments"
 # define INIT "the initialization failed"
-# define FILE "files doesn't exist or doesn't have the right permissions"
+# define FILE1 "cannot open infile"
+# define FILE2 "cannot open outfile"
 # define CMD "command doesn't exist"
 
 #endif
