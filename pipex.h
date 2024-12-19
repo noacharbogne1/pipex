@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:25:57 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/19 09:21:26 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/19 11:17:43 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "libft/libft.h"
 # include "macros.h"
-# include "ft_printf/ft_printf.h"
+# include "ft_printf_fd/ft_printf.h"
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <fcntl.h>

@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 08:59:19 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/19 09:22:03 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/19 10:55:00 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	ft_free_all(t_data *data, char *msg, int flag)
 			ft_free_tab_int(data->fd, data->cmd_count);
 	}
 	if (msg && flag == 0)
-		ft_printf("Error : %s\n", msg);
+		ft_printf_fd(2, "Error : %s\n", msg);
 	if (flag == 1)
 		ft_error(msg);
 	exit(EXIT_SUCCESS);

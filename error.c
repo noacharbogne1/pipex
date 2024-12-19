@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:20:11 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/19 09:21:58 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/19 10:55:05 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_error(char *msg)
 {
-	
+	(void)msg;
+	ft_printf_fd(2, "Error: %s: %s", strerror(errno), msg);
 	exit(EXIT_FAILURE);
 }

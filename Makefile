@@ -6,7 +6,7 @@
 #    By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/11 08:15:54 by ncharbog          #+#    #+#              #
-#    Updated: 2024/12/19 09:22:13 by ncharbog         ###   ########.fr        #
+#    Updated: 2024/12/19 11:17:14 by ncharbog         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,13 +30,15 @@ OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 LIBFT_DIR = libft
 OBJ_LIBFT = $(LIBFT_DIR)/libft.a
 
-PRINTF_DIR = ft_printf
-OBJ_PRINTF = $(PRINTF_DIR)/libftprintf.a
+PRINTF_DIR = ft_printf_fd
+OBJ_PRINTF = $(PRINTF_DIR)/libftprintf_fd.a
 
 all: $(NAME)
 
 $(OBJ_LIBFT):
 	cd $(LIBFT_DIR) && make
+
+$(OBJ_PRINTF):
 	cd $(PRINTF_DIR) && make
 
 $(NAME): $(OBJ) $(OBJ_LIBFT) $(OBJ_PRINTF)
