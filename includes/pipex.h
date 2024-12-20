@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:25:57 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/20 13:49:56 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/20 16:47:35 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,9 @@ t_cmd	*ft_lstnew2(void *content);
 int		ft_lstsize2(t_cmd *lst);
 
 // exec.c
-void	ft_exec(t_data *data, char **env);
+void	ft_exec(t_data *data, char **env, t_cmd *current);
 void	parent(t_data *data);
 void	child(t_data *data, t_cmd *current, char **env, int i);
+void	incorrect_infile(void);
 
 #endif

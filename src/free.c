@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 08:59:19 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/20 13:55:41 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/20 16:41:13 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,6 @@ void	close_files(t_data *data)
 		close(data->outfile);
 		data->outfile = -1;
 	}
-	/*if (data->fd[0] != -1)
-	{
-		close(data->fd[0]);
-		data->fd[0] = -1;
-	}
-	if (data->fd[1] != -1)
-	{
-		close(data->fd[1]);
-		data->fd[1] = -1;
-	}*/
 }
 
 void	ft_free_lst(t_cmd **head)
@@ -70,31 +60,17 @@ void	ft_free_tab_char(char **tab)
 	tab = NULL;
 }
 
-void	ft_free_tab_int(int **tab, int cmd)
-{
-	int	i;
-
-	i = 0;
-	while (i < cmd - 1)
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-	tab = NULL;
-}
-
 void	ft_free_all(t_data *data, char *msg, int flag)
 {
-	if (data && flag > 0)
+	if (data)
 	{
 		close_files(data);
 		if (data->cmd)
 			ft_free_lst(&data->cmd);
 	}
-	if (msg && flag == 0)
+	if (flag == 4)
 	{
-		ft_printf_fd(2, "Error : %s\n", msg);
+		ft_printf_fd(2, "Error: %s: %s\n", msg, strerror(errno));
 		return ;
 	}
 	if (flag > 0)

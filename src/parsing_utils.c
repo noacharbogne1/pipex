@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 13:43:57 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/20 13:53:35 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/20 16:46:32 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,15 @@ void	files(t_data *data, char **argv, int argc)
 {
 	data->infile = open(argv[1], O_RDONLY);
 	if (data->infile == -1)
-		ft_free_all(data, FILE1, 0);
+		ft_free_all(data, FILE1, 4);
 	data->outfile = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (data->outfile == -1)
-		ft_free_all(data, FILE2, 1);
+	{
+		if (errno == EACCES)
+			ft_free_all(data, FILE2, 1);
+		else
+			ft_free_all(NULL, FILE2, 1);
+	}
 }
 
 char	*skip_spaces(char *cmd)

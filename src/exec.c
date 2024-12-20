@@ -6,11 +6,23 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:03:04 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/20 13:53:11 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/20 16:47:25 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+void	incorrect_infile(void)
+{
+	int	null;
+
+	null = open("/dev/null", O_RDONLY);
+	if (null != -1)
+	{
+		dup2(null, STDIN_FILENO);
+		close(null);
+	}
+}
 
 void	parent(t_data *data)
 {
@@ -22,7 +34,7 @@ void	parent(t_data *data)
 void	child(t_data *data, t_cmd *current, char **env, int i)
 {
 	if (data->infile == -1 && i == 0)
-		close(STDIN_FILENO);
+		incorrect_infile();
 	if (i == data->cmd_count - 1)
 	{
 		close(data->fd[1]);
@@ -40,21 +52,12 @@ void	child(t_data *data, t_cmd *current, char **env, int i)
 		ft_free_all(data, ft_strdup(current->cmd), 3);
 }
 
-void	ft_exec(t_data *data, char **env)
+void	ft_exec(t_data *data, char **env, t_cmd *current)
 {
-	t_cmd	*current;
 	__pid_t	p;
 	int		i;
 
 	i = 0;
-	current = data->cmd;
-	if (data->infile == -1)
-	{
-		data->cmd_count--;
-		current = current->next;
-	}
-	else
-		dup2(data->infile, STDIN_FILENO);
 	while (current)
 	{
 		if (pipe(data->fd) == -1)

@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:24:27 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/20 13:53:39 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/20 17:01:11 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,12 @@ char	*get_cmd(t_data *data, char **env, char *cmd)
 	filename = NULL;
 	while (path[i])
 	{
-		filename = get_pathname(cmd, path[i]);
+		filename = get_pathname(cmd, path[i++]);
 		a = access(filename, X_OK);
 		if (a == 0)
 			break ;
 		free(filename);
 		filename = NULL;
-		i++;
 	}
 	ft_free_tab_char(path);
 	if (a != 0)
