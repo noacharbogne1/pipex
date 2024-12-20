@@ -6,7 +6,7 @@
 #    By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/11 08:15:54 by ncharbog          #+#    #+#              #
-#    Updated: 2024/12/19 11:17:14 by ncharbog         ###   ########.fr        #
+#    Updated: 2024/12/20 14:04:18 by ncharbog         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,12 @@ CFLAGS = -Wall -Werror -Wextra -g
 
 NAME = pipex
 
-SRC = parsing.c \
-	parse_cmd.c \
-	free.c \
-	error.c \
-	init.c \
-	exec.c \
-	libft_modified.c
+SRC = src/exec.c \
+	src/free.c \
+	src/main.c \
+	src/parsing.c \
+	src/parsing_utils.c \
+	src/libft_modified.c
 
 OBJ_DIR = .objects
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
