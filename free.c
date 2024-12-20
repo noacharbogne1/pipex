@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 08:59:19 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/19 15:28:33 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/20 12:22:08 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,16 @@ void	close_files(t_data *data)
 		close(data->outfile);
 		data->outfile = -1;
 	}
-	while (i < data->pipe_count)
+	/*if (data->fd[0] != -1)
 	{
-		if (data->fd[i][0] != -1)
-		{
-			close(data->fd[i][0]);
-			data->fd[i][0] = -1;
-		}
-		if (data->fd[i][1] != -1)
-		{
-			close(data->fd[i][1]);
-			data->fd[i][1] = -1;
-		}
-		i++;
+		close(data->fd[0]);
+		data->fd[0] = -1;
 	}
+	if (data->fd[1] != -1)
+	{
+		close(data->fd[1]);
+		data->fd[1] = -1;
+	}*/
 }
 
 void	ft_free_lst(t_cmd **head)
@@ -90,19 +86,17 @@ void	ft_free_tab_int(int **tab, int cmd)
 
 void	ft_free_all(t_data *data, char *msg, int flag)
 {
-	int	i;
-
-	i = 0;
-	if (data)
+	if (data && flag > 0)
 	{
 		close_files(data);
 		if (data->cmd)
 			ft_free_lst(&data->cmd);
-		if (data->fd)
-			ft_free_tab_int(data->fd, data->cmd_count);
 	}
 	if (msg && flag == 0)
+	{
 		ft_printf_fd(2, "Error : %s\n", msg);
+		return ;
+	}
 	if (flag > 0)
 		ft_error(flag, msg);
 	exit(EXIT_SUCCESS);

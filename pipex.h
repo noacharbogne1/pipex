@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:25:57 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/19 15:10:40 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:24:04 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,10 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
-	int		pipe_count;
+	//int		fd[2];
 	int		cmd_count;
 	int		infile;
 	int		outfile;
-	int		**fd;
 	t_cmd	*cmd;
 }	t_data;
 
@@ -48,7 +47,6 @@ char	*skip_spaces(char *cmd);
 
 // parsing.c
 void	ft_parse_args(t_data *data, char **argv);
-void	pipes(t_data *data);
 void	files(t_data *data, char **argv, int argc);
 
 // free.c
@@ -72,7 +70,7 @@ int		ft_lstsize2(t_cmd *lst);
 
 // exec.c
 void	ft_exec(t_data *data, char **env);
-void	parent(t_data *data, int i);
-void	child(t_data *data, t_cmd *current, char **env, int i);
+void	parent(int *fd);
+void	child(t_data *data, t_cmd *current, char **env, int i, int *fd);
 
 #endif

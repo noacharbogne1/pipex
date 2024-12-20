@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:24:27 by ncharbog          #+#    #+#             */
-/*   Updated: 2024/12/19 15:59:34 by ncharbog         ###   ########.fr       */
+/*   Updated: 2024/12/20 09:13:07 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,11 @@ void	ft_parse_args(t_data *data, char **argv)
 	}
 }
 
-void	pipes(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	data->fd = malloc((data->cmd_count) * sizeof (int *));
-	if (!data->fd)
-		ft_free_all(data, PIPE, 2);
-	while (i < data->cmd_count - 1)
-	{
-		data->fd[i] = malloc(2 * sizeof(int));
-		if (!data->fd[i])
-			ft_free_all(data, PIPE, 2);
-		if (pipe(data->fd[i]) == -1)
-			ft_free_all(data, PIPE, 2);
-		i++;
-	}
-	data->pipe_count = i;
-}
-
 void	files(t_data *data, char **argv, int argc)
 {
 	data->infile = open(argv[1], O_RDONLY);
 	if (data->infile == -1)
-		ft_free_all(data, FILE1, 1);
+		ft_free_all(data, FILE1, 0);
 	data->outfile = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (data->outfile == -1)
 		ft_free_all(data, FILE2, 1);
@@ -64,11 +44,9 @@ int	main(int argc, char **argv, char **env)
 	init_struct(&data);
 	if (argc >= 5)
 	{
-		ft_init(&data, argv);
+		init_struct(&data);
 		ft_parse_cmds(&data, argv, env, argc);
 		ft_parse_args(&data, argv);
-		if (data.cmd_count > 1)
-			pipes(&data);
 		files(&data, argv, argc);
 		ft_exec(&data, env);
 		ft_free_all(&data, NULL, 0);
