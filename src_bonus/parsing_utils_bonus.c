@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 13:43:57 by ncharbog          #+#    #+#             */
-/*   Updated: 2025/01/10 11:12:08 by ncharbog         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:44:07 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,27 @@ char	*skip_spaces(char *cmd)
 	return (ft_substr(cmd, start, (end - start)));
 }
 
-void	ft_error(int flag, char *msg)
+void    ft_error(int flag, char *msg)
 {
-	if (flag == 1)
-		ft_printf_fd(2, "Error: %s: %s\n", msg, strerror(errno));
-	if (flag == 2)
-		ft_printf_fd(2, "Error: %s\n", msg);
-	if (flag == 3)
+	char	*error;
+	char	*tmp;
+
+	error = ft_strjoin("Error: ", msg);
+	if (flag == 1 || flag == 3)
 	{
-		ft_printf_fd(2, "Error: %s: %s\n", msg, strerror(errno));
-		free(msg);
+		tmp = error;
+		error = ft_strjoin(error, ": ");
+		free(tmp);
+		tmp = error;
+		error = ft_strjoin(error, strerror(errno));
+		free(tmp);
 	}
+	tmp = error;
+	error = ft_strjoin(error, "\n");
+	free(tmp);
+	write(2, error, ft_strlen(error));
+	free(error);
+	if (flag == 3)
+		free(msg);
 	exit(EXIT_FAILURE);
 }
