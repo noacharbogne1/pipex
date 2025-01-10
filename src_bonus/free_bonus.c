@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 08:59:19 by ncharbog          #+#    #+#             */
-/*   Updated: 2025/01/10 11:12:27 by ncharbog         ###   ########.fr       */
+/*   Updated: 2025/01/10 11:50:26 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ void	ft_free_all(t_data *data, char *msg, int flag)
 	{
 		ft_printf_fd(2, "Error: %s: %s\n", msg, strerror(errno));
 		return ;
+	}
+	if (flag == 0)
+	{
+		ft_printf_fd(2, "Error: %s\n", msg);
+		exit(EXIT_FAILURE);
 	}
 	if (flag > 0)
 		ft_error(flag, msg);
