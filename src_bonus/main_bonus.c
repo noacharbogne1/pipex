@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 13:45:28 by ncharbog          #+#    #+#             */
-/*   Updated: 2025/01/10 11:12:19 by ncharbog         ###   ########.fr       */
+/*   Updated: 2025/01/10 11:44:51 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ int	main(int argc, char **argv, char **env)
 		else
 			dup2(data.infile, STDIN_FILENO);
 		ft_exec(&data, env, current);
-		ft_free_all(&data, NULL, 0);
+		ft_free_all(&data, NULL, -1);
+		return (0);
 	}
 	ft_free_all(NULL, ARGC, 0);
+	return (1);
 }
