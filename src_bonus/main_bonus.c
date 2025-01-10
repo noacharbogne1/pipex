@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 13:45:28 by ncharbog          #+#    #+#             */
-/*   Updated: 2025/01/10 11:12:43 by ncharbog         ###   ########.fr       */
+/*   Updated: 2025/01/10 11:12:19 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../includes/pipex_bonus.h"
 
 int	main(int argc, char **argv, char **env)
 {
@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **env)
 
 	init_struct(&data);
 	current = NULL;
-	if (argc == 5)
+	if (argc >= 5)
 	{
 		init_struct(&data);
 		ft_parse_cmds(&data, argv, env, argc);
