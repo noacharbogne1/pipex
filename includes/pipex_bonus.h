@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:25:57 by ncharbog          #+#    #+#             */
-/*   Updated: 2025/01/10 11:05:17 by ncharbog         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:56:12 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	ft_exec(t_data *data, char **env, t_cmd *current);
 void	parent(t_data *data);
 void	child(t_data *data, t_cmd *current, char **env, int i);
 void	incorrect_infile(void);
+void	incorrect_outfile(void);
 
 // free_bonus.c
 void	ft_free_all(t_data *data, char *msg, int flag);

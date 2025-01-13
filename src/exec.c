@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:03:04 by ncharbog          #+#    #+#             */
-/*   Updated: 2025/01/10 10:47:38 by ncharbog         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:52:11 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@ void	incorrect_infile(void)
 	if (null != -1)
 	{
 		dup2(null, STDIN_FILENO);
+		close(null);
+	}
+}
+
+void	incorrect_outfile(void)
+{
+	int	null;
+
+	null = open("/dev/null", O_WRONLY);
+	if (null != -1)
+	{
+		dup2(null, STDOUT_FILENO);
 		close(null);
 	}
 }
@@ -39,6 +51,8 @@ void	child(t_data *data, t_cmd *current, char **env, int i)
 	{
 		close(data->fd[1]);
 		close(data->fd[0]);
+		if (data->outfile == -1)
+			incorrect_outfile();
 		dup2(data->outfile, STDOUT_FILENO);
 	}
 	else
@@ -58,7 +72,7 @@ void	ft_exec(t_data *data, char **env, t_cmd *current)
 	int		i;
 
 	i = 0;
-	while (current)
+	while (current && data->cmd_count)
 	{
 		if (pipe(data->fd) == -1)
 			ft_free_all(data, PIPE, 2);
@@ -71,6 +85,7 @@ void	ft_exec(t_data *data, char **env, t_cmd *current)
 			parent(data);
 		i++;
 		current = current->next;
+		data->cmd_count--;
 	}
 	while (wait(NULL) != -1)
 		;

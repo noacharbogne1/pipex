@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 13:45:28 by ncharbog          #+#    #+#             */
-/*   Updated: 2025/01/10 15:04:06 by ncharbog         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:57:50 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	main(int argc, char **argv, char **env)
 	current = NULL;
 	if (argc >= 5)
 	{
-		init_struct(&data);
 		ft_parse_cmds(&data, argv, env, argc);
 		ft_parse_args(&data, argv);
 		files(&data, argv, argc);
