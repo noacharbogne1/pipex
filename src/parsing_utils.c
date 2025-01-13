@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 13:43:57 by ncharbog          #+#    #+#             */
-/*   Updated: 2025/01/10 16:19:47 by ncharbog         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:08:43 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*skip_spaces(char *cmd)
 	return (ft_substr(cmd, start, (end - start)));
 }
 
-void    ft_error(int flag, char *msg)
+void	ft_error(int flag, char *msg)
 {
 	char	*error;
 	char	*tmp;
