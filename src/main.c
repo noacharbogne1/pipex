@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 13:45:28 by ncharbog          #+#    #+#             */
-/*   Updated: 2025/01/13 11:08:33 by ncharbog         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:19:28 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ int	main(int argc, char **argv, char **env)
 		ft_parse_args(&data, argv);
 		files(&data, argv, argc);
 		current = data.cmd;
-		if (data.infile == -1 || data.outfile == -1)
+		if (data.infile == -1)
+			data.cmd_count--;
+		if (data.outfile == -1)
 			data.cmd_count--;
 		if (data.infile == -1)
 			current = current->next;
