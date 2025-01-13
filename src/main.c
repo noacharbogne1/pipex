@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 13:45:28 by ncharbog          #+#    #+#             */
-/*   Updated: 2025/01/13 11:19:28 by ncharbog         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:18:35 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	main(int argc, char **argv, char **env)
 			data.cmd_count--;
 		if (data.infile == -1)
 			current = current->next;
-		else
-			dup2(data.infile, STDIN_FILENO);
 		ft_exec(&data, env, current);
 		ft_free_all(&data, NULL, -1);
 		return (0);

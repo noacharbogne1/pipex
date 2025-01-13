@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 13:43:57 by ncharbog          #+#    #+#             */
-/*   Updated: 2025/01/13 11:07:53 by ncharbog         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:20:21 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,26 @@ void	init_struct(t_data *data)
 
 void	files(t_data *data, char **argv, int argc)
 {
-	data->infile = open(argv[1], O_RDONLY);
-	if (data->infile == -1)
-		ft_free_all(NULL, FILE1, 4);
-	data->outfile = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (data->outfile == -1)
+	if (ft_strncmp(argv[1], argv[argc - 1], ft_strlen(argv[1])) == 0)
 	{
-		if (errno == EACCES)
+		data->infile = open(argv[1], O_RDONLY);
+		if (data->infile == -1)
+			ft_free_all(NULL, FILE1, 4);
+		data->outfile = open(argv[1], O_RDWR | O_APPEND, 0644);
+		if (data->outfile == -1)
 			ft_free_all(NULL, FILE2, 4);
+	}
+	else
+	{
+		data->infile = open(argv[1], O_RDONLY);
+		if (data->infile == -1)
+			ft_free_all(NULL, FILE1, 4);
+		data->outfile = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
+		if (data->outfile == -1)
+		{
+			if (errno == EACCES)
+				ft_free_all(NULL, FILE2, 4);
+		}
 	}
 }
 

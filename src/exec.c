@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:03:04 by ncharbog          #+#    #+#             */
-/*   Updated: 2025/01/13 10:52:11 by ncharbog         ###   ########.fr       */
+/*   Updated: 2025/01/13 14:32:11 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,13 @@ void	parent(t_data *data)
 
 void	child(t_data *data, t_cmd *current, char **env, int i)
 {
-	if (data->infile == -1 && i == 0)
-		incorrect_infile();
+	if (i == 0)
+	{
+		if (data->infile == -1)
+			incorrect_infile();
+		else
+			dup2(data->infile, STDIN_FILENO);
+	}
 	if (i == data->cmd_count - 1)
 	{
 		close(data->fd[1]);
@@ -72,7 +77,7 @@ void	ft_exec(t_data *data, char **env, t_cmd *current)
 	int		i;
 
 	i = 0;
-	while (current && data->cmd_count)
+	while (current && i < data->cmd_count)
 	{
 		if (pipe(data->fd) == -1)
 			ft_free_all(data, PIPE, 2);
@@ -85,7 +90,6 @@ void	ft_exec(t_data *data, char **env, t_cmd *current)
 			parent(data);
 		i++;
 		current = current->next;
-		data->cmd_count--;
 	}
 	while (wait(NULL) != -1)
 		;
