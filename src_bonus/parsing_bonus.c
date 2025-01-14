@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:24:27 by ncharbog          #+#    #+#             */
-/*   Updated: 2025/01/10 11:12:14 by ncharbog         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:48:00 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,7 @@ void	ft_parse_cmds(t_data *data, char **argv, char **env, int argc)
 	while (n_cmd < argc - 1)
 	{
 		only_cmd = skip_spaces(argv[n_cmd]);
-		if (access(only_cmd, X_OK) == -1)
-			dup = get_cmd(env, only_cmd);
-		else
-			dup = ft_strdup(only_cmd);
+		dup = get_cmd(env, only_cmd);
 		tmp = ft_lstnew2(dup);
 		ft_lstadd_back2(&(data->cmd), tmp);
 		free(only_cmd);
