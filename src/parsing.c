@@ -6,7 +6,7 @@
 /*   By: ncharbog <ncharbog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:24:27 by ncharbog          #+#    #+#             */
-/*   Updated: 2025/01/14 16:47:38 by ncharbog         ###   ########.fr       */
+/*   Updated: 2025/01/15 13:38:48 by ncharbog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ char	**get_path(char **env)
 	}
 	str = ft_strtrim(env[i], "PATH=");
 	path = ft_split(str, ':');
-	free(str);
-	if (!path)
-		return (NULL);
+	if (str)
+		free(str);
 	return (path);
 }
 
@@ -57,7 +56,8 @@ char	*get_pathname(char *cmd, char *path)
 
 	buf = ft_strjoin(path, "/");
 	pathname = ft_strjoin(buf, cmd);
-	free(buf);
+	if (buf)
+		free(buf);
 	return (pathname);
 }
 
@@ -80,7 +80,8 @@ char	*get_cmd(char **env, char *cmd)
 		a = access(filename, X_OK);
 		if (a == 0)
 			break ;
-		free(filename);
+		if (filename)
+			free(filename);
 		filename = NULL;
 	}
 	ft_free_tab_char(path);
@@ -106,7 +107,8 @@ void	ft_parse_cmds(t_data *data, char **argv, char **env, int argc)
 		dup = get_cmd(env, only_cmd);
 		tmp = ft_lstnew2(dup);
 		ft_lstadd_back2(&(data->cmd), tmp);
-		free(only_cmd);
+		if (only_cmd)
+			free(only_cmd);
 		n_cmd++;
 	}
 	data->cmd_count = ft_lstsize2(data->cmd);
